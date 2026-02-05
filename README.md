@@ -5,6 +5,8 @@ TaskFlow is a minimal task management web application built with React and Tailw
 ## Features
 - Add tasks
 - Delete tasks
+- Mark tasks as completed
+- Filter tasks (All / Active / Completed)
 - Clean and minimal UI
 - Component-based architecture
 
@@ -14,8 +16,6 @@ TaskFlow is a minimal task management web application built with React and Tailw
 - Vite
 
 ## Project Structure
-
-
 
 ## Status
 🚧 In progress — backend integration planned

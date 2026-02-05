@@ -3,7 +3,8 @@ import TaskInput from "./components/TaskInput";
 import TaskList from "./components/TaskList";
 
 function App(){
-  const[tasks, setTasks] = useState ([]);
+  const[task, setTasks] = useState ([]);
+  const[filter, setFilter] =useState("all");
 
   const addTask = (text) => {
     setTasks((prev) => [
@@ -29,6 +30,12 @@ function App(){
   const deleteTask = (id) => {
     setTasks((prev) => prev.filter((t) =>t.id != id));
   };
+  
+  const filteredTasks = task.filter((task) => {
+    if (filter == "active") return !task.completed;
+    if (filter == "completed") return task.completed;
+    return true; //all
+  });
 
   return(
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
@@ -41,10 +48,27 @@ function App(){
         </p>
 
         <TaskInput onAdd={addTask} />
+        <div className="flex justify-center gap-2 mb-4">
+          {["all" , "active" , "completed"].map((type) => (
+            <button
+              key={type}
+              onClick={() => setFilter(type)}
+              className={`px-3 py-1 text-sm rounded-full border transition
+                ${
+                  filter == type
+                    ? "bg-black text-white"
+                    : "bg-white text-gray-600 hover:bg-grey-100"
+                }`}
+            >
+              {type.charAt(0).toUpperCase() + type.slice(1)}
+            </button>
+          ))}
+        </div>
         <TaskList 
-          tasks={tasks} 
+          tasks={filteredTasks} 
           onDelete={deleteTask}
           onToggle={toggleTask}
+          filter={filter}
         />
       </div>
     </div>

@@ -18,7 +18,10 @@ function TaskInput({ onAdd }) {
                 value={text}
                 onChange={(e) => setText(e.target.value)}
             />
-            <button className="bg-black text-white px-4 rounded-lg text-sm">
+            <button 
+                disabled = {!text.trim()}
+                className="bg-black text-white px-4 rounded-lg text-sm disabled:opacity-50"
+            >
                 Add
             </button>
         </form>

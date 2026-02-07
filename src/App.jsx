@@ -41,6 +41,11 @@ function App(){
     return true; //all
   });
 
+  const activeCount = tasks.filter((t) => !t.completed).length;
+  const clearCompleted = () => {
+    setTasks((prev) => prev.filter((task) => !task.completed));
+  };
+
   return(
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
       <div className="bg-white w-full max-w-md p-6 rounded-xl shadow">
@@ -52,6 +57,13 @@ function App(){
         </p>
 
         <TaskInput onAdd={addTask} />
+
+        {/* ACTIVE TASKS COUNTER */}
+        <p className="text-sm text-gray-500 text-center mb-2">
+          Active tasks: <span className="font-medium">{activeCount}</span>
+        </p>
+
+        {/* FILTER TABS */}
         <div className="flex justify-center gap-2 mb-4">
           {["all" , "active" , "completed"].map((type) => (
             <button
@@ -68,6 +80,16 @@ function App(){
             </button>
           ))}
         </div>
+        
+        {tasks.some((t) => t.completed) && (
+          <button 
+          onClick={clearCompleted}
+          className="text-xs text-red-500 hover:underline mb-3 block mx-auto"
+        >
+          Clear completed tasks
+        </button>
+        )}
+
         <TaskList 
           tasks={filteredTasks} 
           onDelete={deleteTask}

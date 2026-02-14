@@ -18,14 +18,7 @@ function App() {
     fetchTasks()
       .then((data) => {
         console.log("FROM BACKEND:", data);
-
-        const mappedTasks = data.map((task) => ({
-          id: task.id,
-          text: task.title,
-          completed: task.status === "done",
-        }));
-
-        setTasks(mappedTasks);
+        setTasks(data);
         setLoading(false);
       })
       .catch((err) => {
@@ -39,13 +32,8 @@ function App() {
     try {
       const newTask = await createTask(text);
 
-      const mapped = {
-        id: newTask.id,
-        text: newTask.title,
-        completed: newTask.status === "done",
-      };
+      setTasks((prev) => [...prev, newTask]);
 
-      setTasks((prev) => [...prev, mapped]);
     } catch (err) {
       console.error(err);
     }
@@ -56,34 +44,32 @@ function App() {
     try {
       const updated = await toggleTaskApi(id);
 
-      const mapped = {
-        id: updated.id,
-        text: updated.title,
-        completed: updated.status === "done",
-      };
-
       setTasks((prev) =>
-        prev.map((t) => (t.id === id ? mapped : t))
+        prev.map((t) => (t._id === updated._id ? updated : t))
       );
     } catch (err) {
-      console.error(err);
+     console.error(err);
     }
   };
+
 
   // DELETE TASK
   const deleteTask = async (id) => {
     await deleteTaskApi(id);
-    setTasks((prev) => prev.filter((t) => t.id !== id));
+    setTasks((prev) => prev.filter((t) => t._id !== id));
   };
+
 
   // FILTER
   const filteredTasks = tasks.filter((task) => {
-    if (filter === "active") return !task.completed;
-    if (filter === "completed") return task.completed;
+    if (filter === "active") return task.status === "todo";
+    if (filter === "completed") return task.status === "done";
     return true;
   });
 
-  const activeCount = tasks.filter((t) => !t.completed).length;
+  const activeCount = tasks.filter(
+    (t) => t.status === "todo"
+  ).length;
 
   const clearCompleted = () => {
     setTasks((prev) => prev.filter((task) => !task.completed));

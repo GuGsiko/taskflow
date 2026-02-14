@@ -7,13 +7,14 @@ function TaskItem({ task, onDelete, onToggle }) {
         >
         <input
              type="checkbox"
-             checked={task.completed}
+             checked={task.status}
               readOnly
               className="accent-black"
         />
+        ✓
         <span
             className={`text-sm ${
-                task.completed
+                task.status === "done"
                 ? "line-through text-gray-400"
                 : ""
             }`}
@@ -26,7 +27,7 @@ function TaskItem({ task, onDelete, onToggle }) {
         onClick={() => onDelete(task.id)}
         className="text-red-500 text-xs hover:underline"
       >
-        Delete
+        🗑
       </button>
     </li>
   );

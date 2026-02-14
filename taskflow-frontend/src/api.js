@@ -4,7 +4,8 @@ const API_URL = "https://taskflow-backend-5ma2.onrender.com/api/tasks";
 export async function fetchTasks() {
   const res = await fetch(API_URL);
   if (!res.ok) throw new Error("Failed to fetch tasks");
-  return res.json();
+  const data = await res.json();
+  return Array.isArray(data) ? data : [];
 }
 
 // POST

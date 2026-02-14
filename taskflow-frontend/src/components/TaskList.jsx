@@ -15,8 +15,8 @@ function TaskList({ tasks , onDelete , onToggle }) {
                 <TaskItem 
                     key={task.id} 
                     task={task} 
-                    onDelete={onDelete}
-                    onToggle={onToggle}
+                    onDelete={() => onDelete(task._id)}
+                    onToggle={() => onToggle(task._id)}
                 />
             ))}
         </ul>

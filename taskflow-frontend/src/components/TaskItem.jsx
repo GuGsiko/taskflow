@@ -1,30 +1,30 @@
 function TaskItem({ task, onDelete, onToggle }) {
+  const isCompleted = task.status === "done";
+
   return (
     <li className="flex items-center justify-between bg-gray-50 px-3 py-2 rounded-lg hover:bg-gray-100 transition">
-        <div
-            className="flex items-center gap-2 cursor-pointer"
-            onClick={() => onToggle(task.id)}
-        >
+      <div
+        className="flex items-center gap-2 cursor-pointer"
+        onClick={onToggle}
+      >
         <input
-             type="checkbox"
-             checked={task.status}
-              readOnly
-              className="accent-black"
+          type="checkbox"
+          checked={isCompleted}
+          readOnly
+          className="accent-black"
         />
-        ✓
+
         <span
-            className={`text-sm ${
-                task.status === "done"
-                ? "line-through text-gray-400"
-                : ""
-            }`}
+          className={`text-sm ${
+            isCompleted ? "line-through text-gray-400" : ""
+          }`}
         >
-          {task.text}
+          {task.title}
         </span>
       </div>
 
       <button
-        onClick={() => onDelete(task.id)}
+        onClick={onDelete}
         className="text-red-500 text-xs hover:underline"
       >
         🗑
